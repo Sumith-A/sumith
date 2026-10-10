@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sumith FM Redio – Your Tamil Music Friend</title>
+<meta name="description" content="Sumith FM Redio – your Tamil music friend. Live Tamil FM, hit songs, Tamil Nadu news, devotional radio.">
+<meta name="theme-color" content="#0b0e1a">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">SFM</div>
+    <div class="brand-text">
+      <h1>Sumith FM <span>Redio</span></h1>
+      <p class="subtitle">Your Tamil Music Friend</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" id="shareSiteBtn" aria-label="Share">
+      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+    </button>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">
+      <svg class="ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="tab active" id="tab-home">
+    <div class="card weather-card">
+      <div class="weather-head">
+        <div>
+          <div class="sec-label">Weather</div>
+          <div class="weather-city-name" id="wCityName">Chennai</div>
+        </div>
+        <select id="wCity" class="city-select" aria-label="Choose city"></select>
+      </div>
+      <div class="weather-body">
+        <div class="weather-temp"><span id="wTemp">--</span>°<small>C</small></div>
+        <div class="weather-meta">
+          <div id="wDesc" class="weather-desc">Loading…</div>
+          <div class="weather-sub"><span id="wMax">--</span>° / <span id="wMin">--</span>° · Humidity <span id="wHum">--</span>% · Wind <span id="wWind">--</span> km/h</div>
+        </div>
+      </div>
+      <div class="weather-days" id="wDays"></div>
+    </div>
+
+    <div class="card player-hero">
+      <div class="sec-label">Live Player</div>
+      <div class="hero-row">
+        <div class="hero-thumb" id="heroThumb"><span class="avatar">SFM</span></div>
+        <div class="hero-info">
+          <div class="hero-title" id="heroTitle">Choose a station</div>
+          <div class="hero-sub" id="heroSub">Music · News · Bhakti</div>
+        </div>
+        <button class="play-big" id="heroPlay" aria-label="Play/Pause">
+          <svg class="ic-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+          <svg class="ic-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+        </button>
+      </div>
+      <div class="hero-progress"><div class="eq" id="heroEq"><i></i><i></i><i></i><i></i><i></i></div><span id="heroStatus">Stopped</span></div>
+      <div class="vol-row">
+        <svg viewBox="0 0 24 24" class="vol-ic"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+        <input type="range" id="volume" min="0" max="100" value="80" aria-label="Volume">
+      </div>
+    </div>
+
+    <div class="sec-head"><span class="sec-label">Recently Played</span><button class="link-btn" id="clearRecentBtn">Clear</button></div>
+    <div class="chip-row" id="recentList"><span class="empty-note">Nothing played yet</span></div>
+
+    <div class="card ticker-card">
+      <div class="sec-label">Tamil Nadu Headlines <small class="muted">(Sample)</small></div>
+      <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+    </div>
+
+    <div class="sec-head"><span class="sec-label">Program Schedule</span></div>
+    <div class="chip-row" id="dayChips"></div>
+    <div class="card schedule-list" id="scheduleList"></div>
+
+    <div class="card form-card">
+      <div class="sec-label">Song Request</div>
+      <form id="requestForm" novalidate>
+        <label>Your name<input type="text" name="name" id="reqName" placeholder="e.g. Raja" required></label>
+        <label>Mobile number<input type="tel" name="phone" id="reqPhone" placeholder="10 digits" inputmode="numeric"></label>
+        <label>Song name<input type="text" name="song" id="reqSong" placeholder="Which song do you want?" required></label>
+        <label>Your dedication<textarea name="msg" id="reqMsg" rows="2" placeholder="For whom? Wishes…"></textarea></label>
+        <button type="submit" class="btn-primary">Send Request</button>
+      </form>
+    </div>
+
+    <div class="card alarm-card">
+      <div class="sec-head">
+        <span class="sec-label">Alarm · Wake-up Radio</span>
+        <button class="btn-small" id="alarmAddBtn">+ New Alarm</button>
+      </div>
+      <div id="alarmList" class="alarm-list"></div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-news">
+    <div class="sec-head"><span class="sec-label">Headlines – Tamil Nadu</span><small class="muted">Sample</small></div>
+    <div class="news-cards" id="newsHeadlines"></div>
+    <div class="sec-head"><span class="sec-label">News Radio – Live Audio</span></div>
+    <div class="grid stations-grid" id="newsLiveGrid"></div>
+    <div id="newsChannelsSec">
+      <div class="sec-head"><span class="sec-label">Tamil News Channels</span><small class="muted">Live audio</small></div>
+      <div class="grid stations-grid" id="newsGrid"></div>
+    </div>
+    <div id="tamilTvSec" style="display:none">
+      <div class="sec-head"><span class="sec-label">Tamil TV Channels</span><small class="muted">Live</small></div>
+      <div class="grid stations-grid" id="tamilTvGrid"></div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-tamil">
+    <div class="sec-head"><span class="sec-label">Tamil FM – Special List</span></div>
+    <div class="chip-row" id="tamilGroupChips"></div>
+    <div class="grid stations-grid" id="tamilGrid"></div>
+  </section>
+
+  <section class="tab" id="tab-search">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="search" id="searchInput" placeholder="Search stations, songs, news…" autocomplete="off">
+    </div>
+    <div id="searchResults" class="search-results"><p class="empty-note">Start typing to search…</p></div>
+  </section>
+
+  <section class="tab" id="tab-all">
+    <div class="sec-head"><span class="sec-label">All Stations</span><button class="link-btn" id="allReload">Reload</button></div>
+    <div class="chip-row" id="allLangChips"></div>
+    <div class="grid stations-grid" id="allGrid"><p class="empty-note">Loading…</p></div>
+  </section>
+
+  <section class="tab" id="tab-composers">
+    <div class="sec-head"><span class="sec-label">Music Directors – Playlists</span></div>
+    <div class="composer-grid" id="composerGrid"></div>
+  </section>
+
+  <section class="tab" id="tab-hits">
+    <div class="sec-head"><span class="sec-label">Hit Songs – Chart</span></div>
+    <div class="chart-list" id="hitsList"></div>
+  </section>
+
+  <section class="tab" id="tab-online">
+    <div class="sec-head"><span class="sec-label">Online FM – All India</span><button class="link-btn" id="onlineReload">Reload</button></div>
+    <div id="onlineWrap"><p class="empty-note">Loading…</p></div>
+  </section>
+
+  <section class="tab" id="tab-devotional">
+    <div class="sec-head"><span class="sec-label">Bhakti (Devotional) Radio</span></div>
+    <div class="grid stations-grid" id="devoStatic"></div>
+    <div class="sec-head"><span class="sec-label">More Bhakti Stations</span></div>
+    <div class="grid stations-grid" id="devoApi"></div>
+  </section>
+
+  <section class="tab" id="tab-fav">
+    <div class="sec-head"><span class="sec-label">My Favorites</span></div>
+    <div class="grid stations-grid" id="favStations"></div>
+    <div class="sec-head"><span class="sec-label">Favorite Songs</span></div>
+    <div class="chart-list" id="favSongs"></div>
+  </section>
+
+</main>
+
+<div class="mini-player hidden" id="miniPlayer">
+  <div class="mp-thumb" id="mpThumb"><span class="avatar">SFM</span></div>
+  <div class="mp-text">
+    <div class="mp-title" id="mpTitle">—</div>
+    <div class="mp-marquee" id="mpMarquee"><span>Sumith FM Redio</span></div>
+  </div>
+  <button class="icon-btn mp-eq-btn" id="mpEqBtn" aria-label="Sound">
+    <span class="eq"><i></i><i></i><i></i></span>
+  </button>
+  <button class="play-big small" id="mpPlay" aria-label="Play/Pause">
+    <svg class="ic-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+    <svg class="ic-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+  </button>
+  <button class="icon-btn" id="mpStop" aria-label="Stop">
+    <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+  </button>
+</div>
+
+<nav class="bottom-nav" id="bottomNav" aria-label="Main navigation">
+  <button class="nav-item active" data-tab="home"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></button>
+  <button class="nav-item" data-tab="news"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H5a1 1 0 0 1-1-1zM17 8h3v9a2 2 0 0 1-3 1.7"/><path d="M7 9h7M7 12h7M7 15h4"/></svg><span>News</span></button>
+  <button class="nav-item" data-tab="tamil"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><path d="M7.8 16.2a6 6 0 0 1 0-8.4M16.2 7.8a6 6 0 0 1 0 8.4M4.9 19.1a10 10 0 0 1 0-14.2M19.1 4.9a10 10 0 0 1 0 14.2"/></svg><span>Tamil FM</span></button>
+  <button class="nav-item" data-tab="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span></button>
+  <button class="nav-item" data-tab="all"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span>All</span></button>
+  <button class="nav-item" data-tab="composers"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Music</span></button>
+  <button class="nav-item" data-tab="hits"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg><span>Hits</span></button>
+  <button class="nav-item" data-tab="online"><svg viewBox="0 0 24 24"><path d="M4 18v-3M8 18v-6M12 18v-9M16 18v-6M20 18v-3"/></svg><span>Online</span></button>
+  <button class="nav-item" data-tab="devotional"><svg viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1l1.7 1.7L12 21.5l7.1-7.1 1.7-1.7a5 5 0 0 0 0-7.1z"/></svg><span>Bhakti</span></button>
+  <button class="nav-item" data-tab="fav"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1L3.2 9.4l6.1-.9z"/></svg><span>Favs</span></button>
+</nav>
+
+<div class="modal-backdrop hidden" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head"><span id="modalTitle">—</span><button class="icon-btn" id="modalClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/data.js"></script>
+<script src="js/player.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
